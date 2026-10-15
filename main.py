@@ -50,5 +50,35 @@ def SingleWordMorse(Message):
     Message = Message.upper()
     split = list(Message)
 
+    data_table = []
 
-SingleWordMorse("LINUX")
+    for letters in split: # For Loop Letters from string ["P", "A", "R", "I", "S", ""]
+      if letters == " ":
+        print("appending space")
+        data_table.append(0)
+        data_table.append(0)
+        data_table.append(0)
+        data_table.append(0)
+        data_table.append(0)
+        data_table.append(0)
+        data_table.append(0)
+      else:
+        print("appending binary letter: " + letters)
+        data_table.append(0)
+        data_table.append(0)
+        data_table.append(0)
+
+        binary_data = data[letters]
+        for doe_state in binary_data:
+          data_table.append(0)
+          if doe_state == 0:
+            data_table.append(1)
+          elif doe_state == 1:
+            data_table.append(1)
+            data_table.append(1)
+            data_table.append(1)
+
+    print(data_table)
+
+
+SingleWordMorse("PARIS ")
