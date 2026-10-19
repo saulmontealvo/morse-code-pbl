@@ -33,7 +33,7 @@ data = {
   "Z": [1,1,1,0,1,1,1,0,1,0,1]
 }
 
-wpm=5
+wpm=20
 unit = 1.2/wpm
 
 def MultiAppend(database,value,howMany):
@@ -56,5 +56,26 @@ def SingleWordMorse(Message):
     del data_table[:3]
 
     print(data_table)
+    print(len(data_table))
+
+    return data_table
+
+# time.sleep(2)
 
 SingleWordMorse("PARIS ")
+
+# localArray = []
+
+# for DotDash in SingleWordMorse("w i"):
+#     time.sleep(unit)
+#     localArray.append(DotDash)
+
+
+
+#     if DotDash == 1:
+#         simple_led.value(1)
+#     else:
+#         simple_led.value(0)
+
+# simple_led.value(0)
+# print('Done')
