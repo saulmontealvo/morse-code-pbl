@@ -46,12 +46,19 @@ def SingleWordMorse(Message):
 
     data_table = []
 
-    for letters in split: # For Loop Letters from string ["P", "A", "R", "I", "S", ""]
+    for i in range(len(split)):
+        letters = split[i]
+        before = split[i-1] if i > 0 else None
+        after = split[i+1] if i < len(split) -1 else None
+
+        print(split[i])
+
         if letters == " ":
             MultiAppend(data_table,0,7)
         else:
-            MultiAppend(data_table,0,3)
-            data_table.extend(data[letters])
+            if not after == " ":
+                MultiAppend(data_table,0,3)
+                data_table.extend(data[letters])
 
     del data_table[:3]
 
@@ -62,7 +69,7 @@ def SingleWordMorse(Message):
 
 # time.sleep(2)
 
-SingleWordMorse("PARIS ")
+SingleWordMorse("I I")
 
 # localArray = []
 
