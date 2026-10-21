@@ -30,7 +30,8 @@ data = {
   "W": [1,0,1,1,1,0,1,1,1],
   "X": [1,1,1,0,1,0,1,0,1,1,1],
   "Y": [1,1,1,0,1,0,1,1,1,0,1,1,1],
-  "Z": [1,1,1,0,1,1,1,0,1,0,1]
+  "Z": [1,1,1,0,1,1,1,0,1,0,1],
+  " ": [0,0,0,0,0,0,0]
 }
 
 wpm=20
@@ -51,14 +52,25 @@ def SingleWordMorse(Message):
         before = split[i-1] if i > 0 else None
         after = split[i+1] if i < len(split) -1 else None
 
-        print(split[i])
+        print(f"Before: {before}, Current: {letters}, After: {after}")
 
-        if letters == " ":
-            MultiAppend(data_table,0,7)
+        # if letters == " ":
+        #     MultiAppend(data_table,0,7)
+        # else:
+        #         MultiAppend(data_table,0,3)
+        #         data_table.extend(data[letters])
+        if after == " ":
+            data_table.append(0)
+            data_table.append(0)
+            data_table.append(0)
+            data_table.extend(data[letters])
         else:
-            if not after == " ":
+            if letters == " ":
+                data_table.extend(data[letters])
+            else:      
                 MultiAppend(data_table,0,3)
                 data_table.extend(data[letters])
+
 
     del data_table[:3]
 
@@ -69,20 +81,4 @@ def SingleWordMorse(Message):
 
 # time.sleep(2)
 
-SingleWordMorse("I I")
-
-# localArray = []
-
-# for DotDash in SingleWordMorse("w i"):
-#     time.sleep(unit)
-#     localArray.append(DotDash)
-
-
-
-#     if DotDash == 1:
-#         simple_led.value(1)
-#     else:
-#         simple_led.value(0)
-
-# simple_led.value(0)
-# print('Done')
+SingleWordMorse("we go")
