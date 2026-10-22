@@ -31,7 +31,8 @@ data = {
   "X": [1,1,1,0,1,0,1,0,1,1,1],
   "Y": [1,1,1,0,1,0,1,1,1,0,1,1,1],
   "Z": [1,1,1,0,1,1,1,0,1,0,1],
-  " ": [0,0,0,0,0,0,0]
+  " ": [0,0,0,0,0,0,0],
+  "nil": ""
 }
 
 wpm=20
@@ -49,36 +50,30 @@ def SingleWordMorse(Message):
 
     for i in range(len(split)):
         letters = split[i]
-        before = split[i-1] if i > 0 else None
-        after = split[i+1] if i < len(split) -1 else None
+        before = split[i-1] if i > 0 else "nil"
+        after = split[i+1] if i < len(split) -1 else "nil"
 
         print(f"Before: {before}, Current: {letters}, After: {after}")
 
-        # if letters == " ":
-        #     MultiAppend(data_table,0,7)
-        # else:
-        #         MultiAppend(data_table,0,3)
-        #         data_table.extend(data[letters])
-        if after == " ":
-            data_table.append(0)
-            data_table.append(0)
-            data_table.append(0)
-            data_table.extend(data[letters])
+        if letters == " ":
+            MultiAppend(data_table,0,7)
         else:
-            if letters == " ":
+            if data[after] == "": # Final Append
                 data_table.extend(data[letters])
-            else:      
-                MultiAppend(data_table,0,3)
-                data_table.extend(data[letters])
-
-
-    del data_table[:3]
+            else:
+                if data[after] == " ": # append without adding 3
+                    print("adding without 3")
+                    data_table.extend(data[letters])
+                else:
+                    data_table.extend(data[letters])
+                    MultiAppend(data_table,0,3)
+               
+                
 
     print(data_table)
     print(len(data_table))
 
     return data_table
-
-# time.sleep(2)
-
+    
+ 
 SingleWordMorse("we go")
