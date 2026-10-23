@@ -35,7 +35,7 @@ data = {
   "nil": ""
 }
 
-wpm=20
+wpm=5
 unit = 1.2/wpm
 
 def MultiAppend(database,value,howMany):
@@ -53,7 +53,7 @@ def SingleWordMorse(Message):
         before = split[i-1] if i > 0 else "nil"
         after = split[i+1] if i < len(split) -1 else "nil"
 
-        print(f"Before: {before}, Current: {letters}, After: {after}")
+        # print(f"Before: {before}, Current: {letters}, After: {after}")
 
         if letters == " ":
             MultiAppend(data_table,0,7)
@@ -61,8 +61,7 @@ def SingleWordMorse(Message):
             if data[after] == "": # Final Append
                 data_table.extend(data[letters])
             else:
-                if data[after] == " ": # append without adding 3
-                    print("adding without 3")
+                if after == " ": # append without adding 3
                     data_table.extend(data[letters])
                 else:
                     data_table.extend(data[letters])
@@ -70,10 +69,28 @@ def SingleWordMorse(Message):
                
                 
 
-    print(data_table)
-    print(len(data_table))
+    print(data_table,len(data_table))
 
     return data_table
+
+def RunMorse(lines):
+    BinaryMorse = SingleWordMorse(lines)
+    currentWord = []
+    split = list(lines.upper())
+
+    print(split)
     
- 
-SingleWordMorse("we go")
+    for number in BinaryMorse:
+        time.sleep(unit)
+        currentWord.append(number)
+
+        key = next((k for k, v in data.items() if v == currentWord),None)
+        
+        print(key)
+
+        if number == 1:
+            simple_led.value(1)
+        else:
+            simple_led.value(0)
+
+RunMorse("PARIS ")
