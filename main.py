@@ -1,6 +1,10 @@
 from machine import Pin
+from machine import I2C
+from pico_i2c_lcd import I2cLcd
 import time
 
+i2c = I2C(id=1,scl=Pin(9),sda=Pin(8),freq=100000)
+lcd = I2cLcd(i2c,0x27,2,16)
 simple_led = Pin(15, Pin.OUT)
 button = Pin(13,Pin.IN, Pin.PULL_UP)
 
@@ -76,17 +80,12 @@ def SingleWordMorse(Message):
 def RunMorse(lines):
     BinaryMorse = SingleWordMorse(lines)
     currentWord = []
-    split = list(lines.upper())
 
-    print(split)
-    
     for number in BinaryMorse:
         time.sleep(unit)
         currentWord.append(number)
 
         key = next((k for k, v in data.items() if v == currentWord),None)
-        
-        print(key)
 
         if number == 1:
             simple_led.value(1)
