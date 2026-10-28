@@ -3,7 +3,7 @@ from machine import I2C
 from pico_i2c_lcd import I2cLcd
 import time
 
-i2c = I2C(id=1,scl=Pin(9),sda=Pin(8),freq=100000)
+i2c = I2C(id=1,scl=Pin(3),sda=Pin(2),freq=100000)
 lcd = I2cLcd(i2c,0x27,2,16)
 simple_led = Pin(15, Pin.OUT)
 button = Pin(13,Pin.IN, Pin.PULL_UP)
@@ -39,12 +39,16 @@ data = {
   "nil": ""
 }
 
-wpm=5
+wpm=20
 unit = 1.2/wpm
 
 def MultiAppend(database,value,howMany):
     for number in range(1,howMany+1):
         database.append(value)
+
+def clearFunc():
+    lcd.clear()
+    simple_led.value(0)
 
 def SingleWordMorse(Message):
     Message = Message.upper()
@@ -78,18 +82,29 @@ def SingleWordMorse(Message):
     return data_table
 
 def RunMorse(lines):
-    BinaryMorse = SingleWordMorse(lines)
+    BinaryMorse = SingleWordMorse(lines) # Returns the string as a list of 0s and 1s for the final message includes spaces and interletter spaces.
     currentWord = []
+
+    lcd.move_to(0,0)
+    lcd.putstr(f"{lines.upper()} in M.C")
 
     for number in BinaryMorse:
         time.sleep(unit)
+        lcd.move_to(0,0)
+        lcd.putstr(f"{lines.upper()} in M.C")
         currentWord.append(number)
 
         key = next((k for k, v in data.items() if v == currentWord),None)
 
         if number == 1:
+            lcd.move_to(0,1)
+            lcd.putstr("1 value")
             simple_led.value(1)
         else:
+            lcd.move_to(0,1)
+            lcd.putstr("0 value")
             simple_led.value(0)
 
-RunMorse("PARIS ")
+    clearFunc()
+
+RunMorse("Hello World")
