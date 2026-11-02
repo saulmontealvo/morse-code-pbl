@@ -107,4 +107,4 @@ def RunMorse(lines):
 
     clearFunc()
 
-RunMorse("Hello World")
+RunMorse("Hello")
